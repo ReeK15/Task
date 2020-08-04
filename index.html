@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Task</title>
+</head>
+<body>
+    <h4>Please input a brackets<h4>
+    <input type="text" id="1">
+    <button type="submit" onclick="bracketsCheck()">Submit</button>
+    
+    <br>
+    <hr>
+    <h4>Press the button to draw the number<h4></h4>
+    <button onclick="drawNumber()">Draw</button>
+    <button onclick="drawNumber()" id="reset" disabled>Reset</button>
+    <br>
+    <br>
+    <span id="number"></span>
+</body>
+</html>
+
+<script>
+    draw = false
+   function bracketsCheck(){
+    var value = ""
+    value = document.getElementById(1).value
+        let breackets = [];
+        let open = {
+            '(' : ')',
+            '{' : '}',
+            '[' : ']'
+        }
+        let closed = {
+            ')' : true,
+            '}' : true,
+            ']' : true
+        }
+
+        for(i = 0; i < value.length; ++i){
+            let breacket = value[i];
+            if(open[breacket]){
+                breackets.push(breacket);
+            }
+            else if(closed[breacket]){
+                if(open[breackets.pop()] != breacket){
+                    alert('false')
+                    return false
+                }
+            }
+        }
+       alert(breackets.length === 0)
+    }
+    function drawNumber(){
+        if(!draw){
+            document.getElementById("reset").disabled = draw
+            draw = true
+            for(i = 1; i <16; ++i){
+            for(j = 1; j<=10; ++j){
+                if((i==1 && (j==1 || j==10)) || 
+                (i==8 && (j==1 || j==10)) || 
+                (i==16-1 && (j==1 || j==10))){
+                document.getElementById("number").innerText += '\xa0\xa0';
+                }
+                else if(i==1 || i==8 || i==16-1 || j==1 || j==10){
+                    document.getElementById("number").innerText += '8';
+                }
+                else{
+                    document.getElementById("number").innerText += '\xa0\xa0';
+                }
+
+            }
+            document.getElementById("number").innerHTML += "<br>"
+            }
+        }
+        else{
+            document.getElementById("number").innerText = '';
+            document.getElementById("reset").disabled = draw
+            draw = false
+
+        }
+    }
+    
+</script>
